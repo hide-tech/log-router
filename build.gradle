@@ -27,10 +27,6 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 }
 
-bootBuildImage {
-	imageName = "${project.name}"
-	environment = ["BP_JVM_VERSION" : "14.*"]
-}
 
 tasks.named('test') {
 	useJUnitPlatform()

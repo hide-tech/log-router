@@ -8,7 +8,7 @@ spring:
   datasource:
     username: ${spring.r2dbc.username}
     password: ${spring.r2dbc.password}
-    url: jdbc:postgresql://localhost:5432/router
+    url: jdbc:postgresql://router-postgres:5432/router
   application:
     name: log-router
   lifecycle:
@@ -16,7 +16,7 @@ spring:
   r2dbc:
     username: user
     password: password
-    url: r2dbc:postgresql://localhost:5432/router
+    url: r2dbc:postgresql://router-postgres:5432/router
     pool:
       max-create-connection-time: 2s
       initial-size: 5
