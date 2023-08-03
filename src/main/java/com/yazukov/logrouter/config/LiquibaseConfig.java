@@ -4,11 +4,18 @@ import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
 @Configuration
 public class LiquibaseConfig {
+
+    private final Environment environment;
+
+    public LiquibaseConfig(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean
     public SpringLiquibase springLiquibase() {
@@ -20,9 +27,9 @@ public class LiquibaseConfig {
 
     @Bean DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.url("jdbc:postgresql://localhost:5432/router");
-        dataSourceBuilder.username("user");
-        dataSourceBuilder.password("password");
+        dataSourceBuilder.url(environment.getProperty("spring.datasource.url"));
+        dataSourceBuilder.username(environment.getProperty("spring.datasource.username"));
+        dataSourceBuilder.password(environment.getProperty("spring.datasource.password"));
         return dataSourceBuilder.build();
     }
 }

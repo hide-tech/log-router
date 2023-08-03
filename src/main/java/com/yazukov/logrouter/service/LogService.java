@@ -1,5 +1,6 @@
 package com.yazukov.logrouter.service;
 
+import com.yazukov.logrouter.dto.LogReport;
 import com.yazukov.logrouter.dto.TravelLogDto;
 import com.yazukov.logrouter.mapper.TravelLogMapper;
 import com.yazukov.logrouter.model.TravelLog;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class LogService {
@@ -33,16 +35,28 @@ public class LogService {
         return logRepository.findAll().map(travelLogMapper::travelLogToTravelLogDto);
     }
 
-    public Mono<Map<LocalDate, List<TravelLogDto>>> getLogReport(String startDate, String endDate, String ownerName, String regNumber) {
+    public Mono<LogReport> getLogReport(String startDate, String endDate, String ownerName, String regNumber) {
         Map<String, String> filters = new HashMap<>();
         processFilters(startDate, endDate, ownerName, regNumber, filters);
-        return logRepository.getAllLogsFiltered(filters).map(log -> {
+        return logRepository.getAllLogsFiltered(filters)
+                .map(log -> {
                     return new TravelLogDto(log.getId(), log.getTripDate(), log.getRegNumber(), log.getOwnerName(), log.getRoute(),
                             log.getOdometerStart(), log.getOdometerEnd(), log.getDescription());
-                }).collectList().map(el -> el.stream()
-                        .peek(elem -> elem.setTotalRange(elem.getOdometerEnd().subtract(elem.getOdometerStart())))
+                })
+                .collectList().map(el -> el.stream()
+                        .peek(elem -> elem.setTotalRange(elem.getOdometerEnd().subtract(elem.getOdometerStart()).doubleValue()))
                         .collect(Collectors.toList()))
-                .map(el -> el.stream().collect(Collectors.groupingBy(TravelLogDto::getTripDate)));
+                .map(el -> el.stream().collect(Collectors.groupingBy(TravelLogDto::getTripDate)))
+                .map(this::convertToLogReport);
+    }
+
+    private LogReport convertToLogReport(Map<LocalDate, List<TravelLogDto>> map) {
+        LogReport logReport = new LogReport();
+        logReport.setLogs(map);
+        Stream<Double> doubleStream = map.values().stream()
+                .flatMap(el -> el.stream().map(TravelLogDto::getTotalRange));
+        logReport.setTotalDistance(doubleStream.mapToDouble(Double::doubleValue).sum());
+        return logReport;
     }
 
     private static void processFilters(String startDate, String endDate, String ownerName, String regNumber, Map<String, String> filters) {

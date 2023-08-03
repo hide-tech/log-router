@@ -1,33 +1,29 @@
 package com.yazukov.logrouter.dto;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class LogReport {
-    private List<TravelLogDto> logs = new ArrayList<>();
-    private BigDecimal totalDistance;
+    private Map<LocalDate, List<TravelLogDto>> logs;
+    private Double totalDistance;
+
+    public Map<LocalDate, List<TravelLogDto>> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(Map<LocalDate, List<TravelLogDto>> logs) {
+        this.logs = logs;
+    }
 
     public LogReport() {
     }
 
-    public LogReport(List<TravelLogDto> logs) {
-        this.logs = logs;
-    }
-
-    public List<TravelLogDto> getLogs() {
-        return logs;
-    }
-
-    public void setLogs(List<TravelLogDto> logs) {
-        this.logs = logs;
-    }
-
-    public BigDecimal getTotalDistance() {
+    public Double getTotalDistance() {
         return totalDistance;
     }
 
-    public void setTotalDistance(BigDecimal totalDistance) {
+    public void setTotalDistance(Double totalDistance) {
         this.totalDistance = totalDistance;
     }
 }

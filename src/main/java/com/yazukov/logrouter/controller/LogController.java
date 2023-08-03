@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-
 @RestController
 @RequestMapping("router/v1/logs")
 public class LogController {
@@ -29,10 +25,10 @@ public class LogController {
     }
 
     @GetMapping("/report")
-    public Mono<Map<LocalDate, List<TravelLogDto>>> logReport(@RequestParam(value = "startDate", required = false) String startDate,
-                                                              @RequestParam(value = "endDate", required = false) String endDate,
-                                                              @RequestParam(value = "ownerName", required = false) String ownerName,
-                                                              @RequestParam(value = "regNumber", required = false) String regNumber) {
+    public Mono<LogReport> logReport(@RequestParam(value = "startDate", required = false) String startDate,
+                                     @RequestParam(value = "endDate", required = false) String endDate,
+                                     @RequestParam(value = "ownerName", required = false) String ownerName,
+                                     @RequestParam(value = "regNumber", required = false) String regNumber) {
         return logService.getLogReport(startDate, endDate, ownerName, regNumber);
     }
 

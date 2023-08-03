@@ -12,22 +12,13 @@ public class TravelLogDto {
     private BigDecimal odometerStart;
     private BigDecimal odometerEnd;
     private String description;
-    private BigDecimal totalRange;
-    private BigDecimal resultRange;
+    private Double totalRange;
 
-    public BigDecimal getResultRange() {
-        return resultRange;
-    }
-
-    public void setResultRange(BigDecimal resultRange) {
-        this.resultRange = resultRange;
-    }
-
-    public BigDecimal getTotalRange() {
+    public Double getTotalRange() {
         return totalRange;
     }
 
-    public void setTotalRange(BigDecimal totalRange) {
+    public void setTotalRange(Double totalRange) {
         this.totalRange = totalRange;
     }
 
