@@ -1,0 +1,222 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-sequence
+      author: hide-tech
+      changes:
+        - createSequence:
+            cycle: true
+            dataType: bigint
+            incrementBy: 1
+            maxValue: 1000000
+            minValue: 0
+            sequenceName: log_seq
+            startValue: 6
+
+  -  changeSet:
+       id:  table-creation
+       author:  hide-tech
+       changes:
+         -  createTable:
+              tableName:  travel_logs
+              columns:
+                -  column:
+                     name:  id
+                     type:  bigint
+                     autoIncrement:  true
+                     constraints:
+                       primaryKey:  true
+                       nullable:  false
+                -  column:
+                     name:  trip_date
+                     type:  date
+                     constraints:
+                       nullable: false
+                -  column:
+                     name:  reg_number
+                     type:  varchar(32)
+                     constraints:
+                       nullable:  false
+                -  column:
+                     name:   owner_name
+                     type:   varchar(150)
+                     constraints:
+                       nullable: false
+                -  column:
+                     name: route
+                     type: varchar(150)
+                     constraints:
+                       nullable: false
+                -  column:
+                     name: odometer_start
+                     type: numeric(7,1)
+                     constraints:
+                       nullable: false
+                -  column:
+                     name: odometer_end
+                     type: numeric(7,1)
+                     constraints:
+                       nullable: false
+                -  column:
+                     name:  description
+                     type:  char(500)
+
+  -  changeSet:
+       id:  insert1
+       author:  hide-tech
+       changes:
+         -  insert:
+              tableName: travel_logs
+              columns:
+                - column:
+                    name: id
+                    value: 2000000
+                - column:
+                    name: trip_date
+                    value: '2022-08-16'
+                - column:
+                    name: reg_number
+                    value: '01X876KL'
+                - column:
+                    name: owner_name
+                    value: 'Vasiliy Pupkin'
+                - column:
+                    name: route
+                    value: 'Toshkent-Gazalkent'
+                - column:
+                    name: odometer_start
+                    value: 12453.9
+                - column:
+                    name: odometer_end
+                    value: 12499.2
+                - column:
+                    name: description
+                    value: 'Small trip to the shop'
+
+  - changeSet:
+      id: insert2
+      author: hide-tech
+      changes:
+        - insert:
+            tableName: travel_logs
+            columns:
+              - column:
+                  name: id
+                  value: 2000001
+              - column:
+                  name: trip_date
+                  value: '2022-08-22'
+              - column:
+                  name: reg_number
+                  value: '01X876KL'
+              - column:
+                  name: owner_name
+                  value: 'Vasiliy Pupkin'
+              - column:
+                  name: route
+                  value: 'Toshkent-Charvak'
+              - column:
+                  name: odometer_start
+                  value: 12653.9
+              - column:
+                  name: odometer_end
+                  value: 12899.2
+              - column:
+                  name: description
+                  value: 'Voyage to the new company'
+
+  - changeSet:
+      id: insert3
+      author: hide-tech
+      changes:
+        - insert:
+            tableName: travel_logs
+            columns:
+              - column:
+                  name: id
+                  value: 2000002
+              - column:
+                  name: trip_date
+                  value: '2022-08-24'
+              - column:
+                  name: reg_number
+                  value: '10367LUI'
+              - column:
+                  name: owner_name
+                  value: 'Alexander Xod'
+              - column:
+                  name: route
+                  value: 'Toshkent-Samarkand'
+              - column:
+                  name: odometer_start
+                  value: 120653.9
+              - column:
+                  name: odometer_end
+                  value: 121899.2
+              - column:
+                  name: description
+                  value: 'Trip to Samarkand and back'
+
+  - changeSet:
+      id: insert4
+      author: hide-tech
+      changes:
+        - insert:
+            tableName: travel_logs
+            columns:
+              - column:
+                  name: id
+                  value: 2000003
+              - column:
+                  name: trip_date
+                  value: '2022-08-28'
+              - column:
+                  name: reg_number
+                  value: '10367LUI'
+              - column:
+                  name: owner_name
+                  value: 'Alexander Xod'
+              - column:
+                  name: route
+                  value: 'Toshkent-Sineri'
+              - column:
+                  name: odometer_start
+                  value: 122230.1
+              - column:
+                  name: odometer_end
+                  value: 122341.2
+              - column:
+                  name: description
+                  value: 'Help to my Mom'
+
+  - changeSet:
+      id: insert5
+      author: hide-tech
+      changes:
+        - insert:
+            tableName: travel_logs
+            columns:
+              - column:
+                  name: id
+                  value: 2000004
+              - column:
+                  name: trip_date
+                  value: '2022-08-30'
+              - column:
+                  name: reg_number
+                  value: '10367LUI'
+              - column:
+                  name: owner_name
+                  value: 'Alexander Xod'
+              - column:
+                  name: route
+                  value: 'Toshkent-Gazalkent-Toshkent'
+              - column:
+                  name: odometer_start
+                  value: 123700.4
+              - column:
+                  name: odometer_end
+                  value: 123899.3
+              - column:
+                  name: description
+                  value: 'Spares delivering'
