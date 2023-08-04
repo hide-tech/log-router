@@ -10,3 +10,36 @@ Installation guide(Win):
 9) open postman or another tool for http queries
 10) hit endpoints "localhost:9000/router/v1/logs | localhost:9000/router/v1/logs/report"
 11) for debugger opened port 8000
+
+Endpoints:
+- /router/v1/logs:
+    GET - get all logs
+    POST - create new log (body: 
+{
+  "tripDate": "2022-05-23",
+  "regNumber": "10YXY677",
+  "ownerName": "not mine",
+  "route": "Toshkent-Tbilisi",
+  "odometerStart": "145768.1",
+  "odometerEnd": "147000.1",
+  "description": "trip"
+})
+- /router/v1/logs/{id}:
+    PUT - update log (id - log id, body:
+{
+  "tripDate": "2022-05-23",
+  "regNumber": "10YXY677",
+  "ownerName": "not mine",
+  "route": "Toshkent-Tbilisi",
+  "odometerStart": "145768.1",
+  "odometerEnd": "147000.1",
+  "description": "trip"
+})
+    DELETE - delete log (id - log id for deletion)
+- /router/v1/logs/report
+    GET - get logs report (path params:
+    startDate - pattern(yyyy-MM-dd),
+    endDate - pattern(yyyy-MM-dd),
+    ownerName - string(part of name, case insensitive),
+    regNumber - string(part of reg number, case insensitive)
+)
