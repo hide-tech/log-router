@@ -51,17 +51,10 @@ public class LogRepository {
     }
 
     public Flux<TravelLog> getAllLogsFiltered(Map<String, String> filters) {
-        String query = "select * from travel_logs where travel_logs.id > 0";
-        if (filters.containsKey("startDate")) {
-            query += " and travel_logs.trip_date between TO_DATE(:start, 'yyyy-MM-dd') and TO_DATE(:end, 'yyyy-MM-dd')";
-        }
-        if (filters.containsKey("ownerName")) {
-            query += " and travel_logs.owner_name ilike :owner";
-        }
-        if (filters.containsKey("regNumber")) {
-            query += " and travel_logs.reg_number ilike :number";
-        }
-        query += " order by travel_logs.odometer_start";
+        String query = "select * from travel_logs where travel_logs.id > 0 " +
+                "and travel_logs.trip_date between TO_DATE(:start, 'yyyy-MM-dd') and TO_DATE(:end, 'yyyy-MM-dd') " +
+                "and travel_logs.owner_name ilike :owner and travel_logs.reg_number ilike :number " +
+                "order by travel_logs.odometer_start";
         return databaseClient.sql(query)
                 .bind("start", filters.get("startDate"))
                 .bind("end", filters.get("endDate"))
